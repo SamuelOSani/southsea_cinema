@@ -17,9 +17,16 @@ class MovieListing extends StatelessWidget {
       drawer: const NavDrawer(),
       body: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('FAVOUR IS A CLOWN'),
-            Text('FAVOUR IS A CLOWN DESCRIBES A YOUNG GIRL FROM DOUALA WHO DOES NOT HAVE SENSE')
+            Text('FAVOUR IS A CLOWN DESCRIBES A YOUNG GIRL FROM DOUALA WHO DOES NOT HAVE SENSE'),
+            Row(
+              children: [
+                Text('Runtime: 90 mins'),
+                Text('Age rating: 18'),
+              ]
+            )
           ],
         ),
       ),
