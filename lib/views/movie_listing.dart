@@ -11,6 +11,7 @@ class MovieListing extends StatefulWidget {
 
 class _MovieListingState extends State<MovieListing> {
   int selectedTickets = 1;
+  String bookingMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +35,30 @@ class _MovieListingState extends State<MovieListing> {
               Text('Age rating: 18'),
             ]),
             DropdownMenu<int>(
-              initialSelection: selectedTickets,
-              dropdownMenuEntries: const [
-                DropdownMenuEntry(value: 1, label: 'One ticket'),
-                DropdownMenuEntry(value: 2, label: 'Two tickets'),
-                DropdownMenuEntry(value: 3, label: 'Three tickets'),
-                DropdownMenuEntry(value: 4, label: 'Four tickets'),
-                DropdownMenuEntry(value: 5, label: 'Five tickets'),
-              ],
-              onSelected: (int? value) {
-                if (value != null) {
+                initialSelection: selectedTickets,
+                dropdownMenuEntries: const [
+                  DropdownMenuEntry(value: 1, label: 'One ticket'),
+                  DropdownMenuEntry(value: 2, label: 'Two tickets'),
+                  DropdownMenuEntry(value: 3, label: 'Three tickets'),
+                  DropdownMenuEntry(value: 4, label: 'Four tickets'),
+                  DropdownMenuEntry(value: 5, label: 'Five tickets'),
+                ],
+                onSelected: (int? value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedTickets = value;
+                    });
+                  }
+                }),
+              ElevatedButton(
+                onPressed: () {
                   setState(() {
-                    selectedTickets = value;
+                    bookingMessage = '$selectedTickets ticket(s) added to order';
                   });
-                }
-                })
+                },
+                child: const Text('Add to order'),
+              ),
+              Text(bookingMessage),
           ],
         ),
       ),
