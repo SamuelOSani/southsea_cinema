@@ -24,16 +24,50 @@ class _MovieListingState extends State<MovieListing> {
       ),
       drawer: const NavDrawer(),
       body: Container(
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('FAVOUR IS A CLOWN'),
-            Text(
-                'FAVOUR IS A CLOWN DESCRIBES A YOUNG GIRL FROM DOUALA WHO DOES NOT HAVE SENSE'),
+           const Text('Weapons (2025) (18)',
+            style: TextStyle(
+              color: cinemaFontWhite,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+            const SizedBox(height: 24),
+            const Text(
+                'When all but one child from the same class mysteriously vanish on the same night at exactly the same time, a community is left questioning who or what is behind their disappearance.',
+                style: TextStyle(
+                  color: cinemaFontWhite,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 16),
             Row(children: [
-              Text('Runtime: 90 mins'),
-              Text('Age rating: 18'),
+              const Text('Sunday 4th October 2026, 21:00 - ends at 23:08',
+              style: TextStyle(
+                  color: cinemaFontMuted,
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(width: 16),
+              const Text('Age rating: 18',
+              style: TextStyle(
+                  color: cinemaFontMuted,
+                  fontSize: 15,
+                ),
+              ),
             ]),
+            const SizedBox(height: 32),
+            const Text('Ticket(s)',
+              style: TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
             DropdownMenu<int>(
                 initialSelection: selectedTickets,
                 dropdownMenuEntries: const [
@@ -50,7 +84,16 @@ class _MovieListingState extends State<MovieListing> {
                     });
                   }
                 }),
+                const SizedBox(height: 24),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cinemaBrand,
+                  foregroundColor: cinemaBackground,
+                  padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 14,
+                  ),
+                ),
                 onPressed: () {
                   setState(() {
                     bookingMessage = '$selectedTickets ticket(s) added to order';
@@ -58,7 +101,13 @@ class _MovieListingState extends State<MovieListing> {
                 },
                 child: const Text('Add to order'),
               ),
-              Text(bookingMessage),
+              const SizedBox(height: 16),
+              Text(bookingMessage,
+              style: TextStyle(
+                  color: cinemaBrandLight,
+                  fontSize: 12,
+                ),
+              ),
           ],
         ),
       ),
