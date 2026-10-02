@@ -23,20 +23,22 @@ class _MovieListingState extends State<MovieListing> {
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: Container(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-           const Text('Weapons (2025) (18)',
-            style: TextStyle(
-              color: cinemaFontWhite,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-            const SizedBox(height: 24),
-            const Text(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final bool isWide = constraints.maxWidth > 600;
+          final movieInfo = Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Weapons (2025) (18)',
+                style: TextStyle(
+                  color: cinemaFontWhite,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const Text(
                 'When all but one child from the same class mysteriously vanish on the same night at exactly the same time, a community is left questioning who or what is behind their disappearance.',
                 style: TextStyle(
                   color: cinemaFontWhite,
@@ -44,72 +46,93 @@ class _MovieListingState extends State<MovieListing> {
                 ),
               ),
               const SizedBox(height: 16),
-            Row(children: [
-              const Text('Sunday 4th October 2026, 21:00 - ends at 23:08',
-              style: TextStyle(
+              const Text(
+                'Sunday 4th October 2026, 21:00 - ends at 23:08',
+                style: TextStyle(
                   color: cinemaFontMuted,
                   fontSize: 15,
                 ),
               ),
-              const SizedBox(width: 16),
-              const Text('Age rating: 18',
-              style: TextStyle(
-                  color: cinemaFontMuted,
-                  fontSize: 15,
+            ],
+          );
+          final ticketControls = Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Ticket(s)',
+                style: TextStyle(
+                  color: cinemaFontWhite,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ]),
-            const SizedBox(height: 32),
-            const Text('Ticket(s)',
-              style: TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            DropdownMenu<int>(
-                initialSelection: selectedTickets,
-                dropdownMenuEntries: const [
-                  DropdownMenuEntry(value: 1, label: 'One ticket'),
-                  DropdownMenuEntry(value: 2, label: 'Two tickets'),
-                  DropdownMenuEntry(value: 3, label: 'Three tickets'),
-                  DropdownMenuEntry(value: 4, label: 'Four tickets'),
-                  DropdownMenuEntry(value: 5, label: 'Five tickets'),
-                ],
-                onSelected: (int? value) {
-                  if (value != null) {
-                    setState(() {
-                      selectedTickets = value;
-                    });
-                  }
-                }),
-                const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              DropdownMenu<int>(
+                  initialSelection: selectedTickets,
+                  dropdownMenuEntries: const [
+                    DropdownMenuEntry(value: 1, label: 'One ticket'),
+                    DropdownMenuEntry(value: 2, label: 'Two tickets'),
+                    DropdownMenuEntry(value: 3, label: 'Three tickets'),
+                    DropdownMenuEntry(value: 4, label: 'Four tickets'),
+                    DropdownMenuEntry(value: 5, label: 'Five tickets'),
+                  ],
+                  onSelected: (int? value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedTickets = value;
+                      });
+                    }
+                  }),
+              const SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: cinemaBrand,
                   foregroundColor: cinemaBackground,
                   padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 14,
+                    horizontal: 24,
+                    vertical: 14,
                   ),
                 ),
                 onPressed: () {
                   setState(() {
-                    bookingMessage = '$selectedTickets ticket(s) added to order';
+                    bookingMessage =
+                        '$selectedTickets ticket(s) added to order';
                   });
                 },
                 child: const Text('Add to order'),
               ),
               const SizedBox(height: 16),
-              Text(bookingMessage,
-              style: TextStyle(
+              Text(
+                bookingMessage,
+                style: TextStyle(
                   color: cinemaBrandLight,
                   fontSize: 12,
                 ),
               ),
-          ],
-        ),
+            ],
+          );
+
+          return Container(
+            padding: const EdgeInsets.all(24),
+            child: isWide
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: movieInfo),
+                      const SizedBox(width: 32),
+                      ticketControls,
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      movieInfo,
+                      const SizedBox(height: 32),
+                      ticketControls,
+                    ],
+                  ),
+          );
+        },
       ),
     );
   }
