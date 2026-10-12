@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/models/movie.dart';
+import 'package:southsea_cinema/constants.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -12,6 +13,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: cinemaSurface,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -31,26 +33,30 @@ class MovieCard extends StatelessWidget {
                   Text(
                     movie.title,
                     style: const TextStyle(
+                      color: cinemaFontWhite,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    movie.description,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  Text(movie.description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: cinemaFontMuted,
+                      )),
                   const SizedBox(height: 8),
-
                   Text(
                     'Age rating: ${movie.ageRating}',
+                    style: const TextStyle(
+                      color: cinemaFontMuted,
+                    ),
                   ),
                   const SizedBox(height: 8),
-
                   Text(
                     '£${movie.ticketPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
+                      color: cinemaBrand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
