@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
-import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/models/movie.dart';
 
 class MovieListing extends StatefulWidget {
-  const MovieListing({super.key});
+  final Movie movie;
+
+  const MovieListing({
+    super.key,
+    required this.movie,
+  });
 
   @override
   State<MovieListing> createState() => _MovieListingState();
@@ -22,33 +27,35 @@ class _MovieListingState extends State<MovieListing> {
         iconTheme: const IconThemeData(color: cinemaBrand),
         elevation: 0,
       ),
-      drawer: const NavDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final bool isWide = constraints.maxWidth > 600;
           final movieInfo = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Weapons (2025) (18)',
-                style: TextStyle(
+              Text(
+                '${widget.movie.title} (${widget.movie.ageRating})',
+                style: const TextStyle(
                   color: cinemaFontWhite,
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(height: 16),
+              Image.asset(widget.movie.posterPath,
+                  width: 120, height: 180, fit: BoxFit.cover),
               const SizedBox(height: 24),
-              const Text(
-                'When all but one child from the same class mysteriously vanish on the same night at exactly the same time, a community is left questioning who or what is behind their disappearance.',
-                style: TextStyle(
+              Text(
+                widget.movie.description,
+                style: const TextStyle(
                   color: cinemaFontWhite,
                   fontSize: 16,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Sunday 4th October 2026, 21:00 - ends at 23:08',
-                style: TextStyle(
+              Text(
+                widget.movie.showtime,
+                style: const TextStyle(
                   color: cinemaFontMuted,
                   fontSize: 15,
                 ),
@@ -58,9 +65,9 @@ class _MovieListingState extends State<MovieListing> {
           final ticketControls = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Ticket(s)',
-                style: TextStyle(
+              Text(
+                'Ticket(s) (£${widget.movie.ticketPrice.toStringAsFixed(2)} each)',
+                style: const TextStyle(
                   color: cinemaFontWhite,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -112,25 +119,27 @@ class _MovieListingState extends State<MovieListing> {
             ],
           );
 
-          return Container(
-            padding: const EdgeInsets.all(24),
-            child: isWide
-                ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(child: movieInfo),
-                      const SizedBox(width: 32),
-                      ticketControls,
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      movieInfo,
-                      const SizedBox(height: 32),
-                      ticketControls,
-                    ],
-                  ),
+          return SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              child: isWide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: movieInfo),
+                        const SizedBox(width: 32),
+                        ticketControls,
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        movieInfo,
+                        const SizedBox(height: 32),
+                        ticketControls,
+                      ],
+                    ),
+            ),
           );
         },
       ),

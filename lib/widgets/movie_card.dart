@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/views/movie_listing.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -54,11 +55,35 @@ class MovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
+                    movie.showtime,
+                    style: const TextStyle(
+                      color: cinemaFontMuted,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
                     '£${movie.ticketPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       color: cinemaBrand,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MovieListing(movie: movie),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cinemaBrand,
+                      foregroundColor: cinemaBackground,
+                    ),
+                    child: const Text('Book Now'),
                   ),
                 ],
               ),
