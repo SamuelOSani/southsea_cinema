@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 
 class MovieCard extends StatelessWidget {
@@ -63,7 +63,7 @@ class MovieCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '£${movie.ticketPrice.toStringAsFixed(2)}',
+                    movie.formattedPrice,
                     style: const TextStyle(
                       color: cinemaBrand,
                       fontWeight: FontWeight.bold,

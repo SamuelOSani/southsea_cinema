@@ -66,7 +66,7 @@ class _MovieListingState extends State<MovieListing> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Ticket(s) (£${widget.movie.ticketPrice.toStringAsFixed(2)} each)',
+                'Ticket(s) (${widget.movie.formattedPrice} each)',
                 style: const TextStyle(
                   color: cinemaFontWhite,
                   fontSize: 16,
