@@ -22,10 +22,8 @@ void main() {
     await tester.tap(find.text('My Settings'));
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('Customer settings will appear here.'),
-      findsOneWidget,
-    );
+    expect(find.text('Customer Profile'), findsOneWidget);
+    expect(find.byType(TextField), findsNWidgets(3));
 
     // Navigate back to Home.
     await tester.tap(find.byIcon(Icons.menu));
