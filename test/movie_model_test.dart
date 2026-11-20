@@ -47,5 +47,47 @@ void main() {
       expect(movieWithPence.formattedPrice, '£6.50');
       expect(movieWithWholePounds.formattedPrice, '£10.00');
     });
+
+    test('JSON conversion preserves all Movie properties', () {
+      final Map<String, dynamic> data = {
+        'id': 'weapons-2025',
+        'title': 'Weapons (2025)',
+        'description': 'A mystery horror film',
+        'ageRating': '18',
+        'showtime': '21:00',
+        'ticketPrice': 6.50,
+        'posterPath': 'assets/images/weapons.jpg',
+      };
+
+      final Movie movie = Movie.fromJson(data);
+
+      expect(movie.id, 'weapons-2025');
+      expect(movie.title, 'Weapons (2025)');
+      expect(movie.description, 'A mystery horror film');
+      expect(movie.ageRating, '18');
+      expect(movie.showtime, '21:00');
+      expect(movie.ticketPrice, 6.50);
+      expect(movie.posterPath, 'assets/images/weapons.jpg');
+
+      expect(movie.toJson(), data);
+    });
+
+    test('Whole-number JSON prices become doubles', () {
+      final Map<String, dynamic> data = {
+        'id': 'test-movie',
+        'title': 'Test Movie',
+        'description': 'A test film',
+        'ageRating': 'PG',
+        'showtime': '18:00',
+        'ticketPrice': 10,
+        'posterPath': 'assets/images/test.jpg',
+      };
+
+      final Movie movie = Movie.fromJson(data);
+
+      expect(movie.ticketPrice, 10.0);
+      expect(movie.ticketPrice, isA<double>());
+      expect(movie.formattedPrice, '£10.00');
+    });
   });
 }

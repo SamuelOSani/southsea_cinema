@@ -3,6 +3,8 @@ import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/movie_repository.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('MovieRepository unit tests', () {
     test('getMovies returns two movies', () {
       final MovieRepository repository = MovieRepository();
@@ -46,6 +48,36 @@ void main() {
       final Movie? movie = repository.getMovieById('unknown-movie');
 
       expect(movie, isNull);
+    });
+    test('loadMoviesFromAsset reads all movies from the bundled JSON', () async {
+      final MovieRepository repository = MovieRepository();
+      final List<Movie> movies = await repository.loadMoviesFromAsset();
+
+      expect(movies.length, 2);
+      expect(movies[0].id, 'weapons-2025');
+      expect(movies[0].title, 'Weapons (2025)');
+      expect(movies[0].ticketPrice, 6.50);
+      expect(movies[1].id, 'digger-2026');
+      expect(movies[1].title, 'Digger (2026)');
+      expect(movies[1].ticketPrice, 6.50);
+
+      // After loading, synchronous methods use the cached JSON catalogue.
+      expect(repository.getMovies(), movies);
+      expect(repository.getMovieById('digger-2026')?.title, 'Digger (2026)');
+    });
+
+    test('missing JSON asset reports an error without changing the cache', () async {
+      final MovieRepository repository = MovieRepository();
+
+      await expectLater(
+        repository.loadMoviesFromAsset(
+          assetPath: 'assets/data/does-not-exist.json',
+        ),
+        throwsA(anything),
+      );
+
+      // A failed load does not overwrite the original fallback catalogue.
+      expect(repository.getMovies().length, 2);
     });
   });
 }
