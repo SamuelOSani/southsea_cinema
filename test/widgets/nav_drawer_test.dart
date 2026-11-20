@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
 
 void main() {
+  setUp(() {
+    rootBundle.clear();
+  });
+
   testWidgets('Drawer navigates between cinema pages', (tester) async {
     await tester.pumpWidget(const SouthseaCinemaApp());
+    await tester.pumpAndSettle();
 
     // Navigate from Home to My Basket.
     await tester.tap(find.byIcon(Icons.menu));
